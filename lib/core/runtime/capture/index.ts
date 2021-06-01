@@ -115,6 +115,8 @@ export const hack = <T extends typeof http.request>(
       logger.debug(`${logPre} Record request info. Response body length: ${
         requestLog.responseLength
       }`);
+
+      console.log("finishRequest:", new Date().getTime());
     };
 
     request.once("socket", (socket: Socket): void => {

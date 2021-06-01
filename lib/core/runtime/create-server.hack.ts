@@ -42,6 +42,7 @@ export const httpCreateServerHack = (): void => {
       }
 
       const requestListenerWrap: http.RequestListener = (req, res) => {
+        console.log("requestListenerWrap: ", new Date().getTime());
         const start = new Date();
         const timestamps: RequestLog["timestamps"] = {
           dnsTime: 0,
@@ -93,6 +94,7 @@ export const httpCreateServerHack = (): void => {
 
         res.once("finish", () => {
           const context = currentContext();
+          console.log("finish ", new Date().getTime());
 
           context.currentRequest = {
             SN: context.SN,
@@ -153,6 +155,7 @@ export const httpCreateServerHack = (): void => {
 
         res.once("close", () => {
           timestamps.responseClose = new Date();
+          console.log("close: ", new Date().getTime());
 
           const context = currentContext();
 
@@ -164,6 +167,7 @@ export const httpCreateServerHack = (): void => {
         });
 
         d.run(() => {
+          console.log("d.run ", new Date().getTime());
           const context = currentContext();
           eventBus.emit(EVENT_LIST.REQUEST_START, {
             req, context
