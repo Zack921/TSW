@@ -125,7 +125,7 @@ export class Logger {
       this.winstonLogger.log(`${winstonLogType}`, logStr);
     }
 
-    if (isInspect()) {
+    if (!isInspect()) {
       // When started with inspect, log will send to 2 places
       // 1. Local stdout
       // 2. Remote(maybe chrome inspect window) inspect window
