@@ -14,7 +14,7 @@ export const installHacks = (): void => {
   httpCreateServerHack();
   dnsHack();
   consoleHack();
-  requestHack();
+  requestHack(); // 因为server中有可能需要二次请求，所以http.request也需要hack
   winstonHack();
 };
 

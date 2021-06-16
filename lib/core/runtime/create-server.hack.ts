@@ -64,7 +64,7 @@ export const httpCreateServerHack = (): void => {
             const clearDomain = (): void => {
               d.remove(req);
               d.remove(res);
-
+              // 从 1.0 拿过来的，据说能解决一些场景下的内存泄露
               const parser = (req.socket as any).parser as any;
               if (parser && parser.domain) {
                 (parser.domain as domain.Domain).exit();
@@ -173,8 +173,7 @@ export const httpCreateServerHack = (): void => {
               });
 
               // proxy req to proxy env when hitting uid
-              if ((isIP(context.proxyIp))
-            && !req.headers["x-tsw-proxy"]) {
+              if ((isIP(context.proxyIp)) && !req.headers["x-tsw-proxy"]) {
                 console.debug("isProxyUser...");
 
                 const requestOptions = {
@@ -186,7 +185,8 @@ export const httpCreateServerHack = (): void => {
                 };
                 console.debug("start proxy");
                 const proxyReq = http.request(requestOptions, (proxyRes) => {
-                  proxyRes.pipe(res);
+                  // readable.pipe(destination[, options])
+                  proxyRes.pipe(res); // 把代理请求拿到的res塞给原请求的res
                   Object.keys(proxyRes.headers).forEach((headerType) => {
                     res.setHeader(headerType, proxyRes.headers[headerType]);
                   });

@@ -15,6 +15,7 @@ export const captureOutgoing = (outgoing: http.OutgoingMessage): void => {
   let bodyLength = 0;
   const body: Buffer[] = [];
 
+  // hack OutgoingMessage._send
   (outgoing as any)._send = ((fn) => (
     data: Buffer | string,
     encodingOrCallback?: string | ((err?: Error) => void) | undefined,
@@ -44,6 +45,7 @@ export const captureOutgoing = (outgoing: http.OutgoingMessage): void => {
     return fn.apply(outgoing, [data, encoding, callback]);
   })((outgoing as any)._send);
 
+  // hack OutgoingMessage._finish
   (outgoing as any)._finish = ((fn) => (
     ...args: unknown[]
   ): void => {

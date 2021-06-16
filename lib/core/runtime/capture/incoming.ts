@@ -20,6 +20,8 @@ export interface ResponseBodyInfo {
 export const captureReadableStream = (
   stream: NodeJS.ReadableStream
 ): ResponseBodyInfo => {
+  // 先读出来放一份数据到context里，再重新塞回给业务使用
+
   const originPush = (stream as any).push;
 
   const info: ResponseBodyInfo = {
