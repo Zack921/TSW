@@ -1,9 +1,9 @@
 import * as path from "path";
-import { consoleHack, consoleRestore } from "./core/runtime/console.hack";
 import {
   httpCreateServerHack,
   httpCreateServerRestore
 } from "./core/runtime/create-server.hack";
+import { consoleHack, consoleRestore } from "./core/runtime/console.hack";
 import { dnsHack, dnsRestore } from "./core/runtime/dns.hack";
 import { requestHack, requestRestore } from "./core/runtime/capture/index";
 import { winstonHack, winstonRestore } from "./core/winston";

@@ -23,6 +23,9 @@ export const httpCreateServerHack = (): void => {
     httpCreateServerHacked = true;
     originHttpCreateServer = http.createServer;
 
+    // const b = 1;
+    // const a = ((b1) => ((): void => { console.log(b1); }))(b);
+
     // eslint-disable-next-line
     // @ts-ignore
     // By default, ts not allow us to rewrite original methods.
