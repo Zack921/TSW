@@ -125,7 +125,7 @@ export class Logger {
       this.winstonLogger.log(`${winstonLogType}`, logStr);
     }
 
-    if (!isInspect()) {
+    if (isInspect()) {
       // When started with inspect, log will send to 2 places
       // 1. Local stdout
       // 2. Remote(maybe chrome inspect window) inspect window
@@ -251,11 +251,11 @@ export class Logger {
   }
 
   private static fillInspect(str: string, level: number): void {
-    if ((console as any)._stdout === process.stdout) {
+    if ((console as any)._stdout === process.stdout) { // 本地,远程窗口为true
       const empty = new Stream.Writable();
       empty.write = (): boolean => false;
       empty.end = (): void => {};
-      (console as any)._stdout = empty;
+      (console as any)._stdout = empty; // console 在 inspect 下会输出到本地窗口和inspect窗口,此处屏蔽输出到本地的路径
       (console as any)._stderr = empty;
     }
     /* eslint-enable */
